@@ -1,0 +1,52 @@
+@use "sass:meta";
+@use "sass:string";
+@use "sass:color";
+@import "./colors";
+
+.prose {
+  table {
+    border-collapse: collapse;
+    border-radius: 30px;
+    border-style: hidden; /* hide standard table (collapsed) border */
+    font-size: 1em;
+    margin: 0;
+    td {
+      background-color: hsla(220.9, 39.3%, 11%, 0.5);
+      padding: 0.5rem;
+    }
+  }
+
+  h3 {
+    color: $red;
+    background-color: hsla(220.9, 39.3%, 11%, 0.5);
+    font-weight: bold;
+    padding-left: 0.25rem;
+  }
+
+  h4 {
+    color: $red;
+    background-color: hsla(220.9, 39.3%, 11%, 0.5);
+    font-weight: bold;
+    padding-left: 0.25rem;
+    margin-bottom: 0;
+  }
+
+  h5 {
+    color: $blue;
+    font-size: 0.9rem;
+    background-color: hsla(220.9, 39.3%, 11%, 0.5);
+    padding-top: 1em;
+    padding-left: 0.25rem;
+    margin-bottom: 0;
+  }
+
+  pre {
+    border-radius: 0;
+    padding: 0 0.5rem;
+    margin: 0;
+  }
+
+  .bg-trans {
+    background-color: hsla(220.9, 39.3%, 11%, 0.5);
+  }
+}

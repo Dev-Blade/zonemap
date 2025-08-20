@@ -1,0 +1,27 @@
+@use "sass:meta";
+@use "sass:string";
+@use "sass:color";
+
+// colors
+$gray-50: hsl(210, 20%, 98%);
+$gray-100: hsl(220 14.3% 95.9%);
+$gray-200: hsl(220 13% 91%);
+$gray-300: hsl(216 12.2% 83.9%);
+$gray-400: hsl(217.9 10.6% 64.9%);
+$gray-500: hsl(220 8.9% 46.1%);
+$gray-600: hsl(215 13.8% 34.1%);
+$gray-700: hsl(216.9 19.1% 26.7%);
+$gray-800: hsl(215 27.9% 16.9%);
+$gray-900: hsl(220.9 39.3% 11%);
+$gray-950: hsl(224 71.4% 4.1%);
+
+$white: #ffffff;
+$black: #000000;
+
+$blue: #6969ff;
+
+$green: #199900;
+$green-active: #116600;
+
+$red: #ff4919;
+$red-active: #661100;

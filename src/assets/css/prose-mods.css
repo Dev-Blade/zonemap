@@ -1,0 +1,40 @@
+.prose table {
+  border-collapse: collapse;
+  border-radius: 30px;
+  border-style: hidden; /* hide standard table (collapsed) border */
+  font-size: 1em;
+  margin: 0;
+}
+.prose table td {
+  background-color: hsla(220.9, 39.3%, 11%, 0.5);
+  padding: 0.5rem;
+}
+.prose h3 {
+  color: #ff4919;
+  background-color: hsla(220.9, 39.3%, 11%, 0.5);
+  font-weight: bold;
+  padding-left: 0.25rem;
+}
+.prose h4 {
+  color: #ff4919;
+  background-color: hsla(220.9, 39.3%, 11%, 0.5);
+  font-weight: bold;
+  padding-left: 0.25rem;
+  margin-bottom: 0;
+}
+.prose h5 {
+  color: #6969ff;
+  font-size: 0.9rem;
+  background-color: hsla(220.9, 39.3%, 11%, 0.5);
+  padding-top: 1em;
+  padding-left: 0.25rem;
+  margin-bottom: 0;
+}
+.prose pre {
+  border-radius: 0;
+  padding: 0 0.5rem;
+  margin: 0;
+}
+.prose .bg-trans {
+  background-color: hsla(220.9, 39.3%, 11%, 0.5);
+}/*# sourceMappingURL=prose-mods.css.map */
