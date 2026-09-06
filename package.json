@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --base=/scum/zonemap",
+    "build": "tsc && vite build --base=./",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "tiles": "cd ./ && docker run --rm -v /home:/home ghcr.io/osgeo/gdal:ubuntu-small-latest gdal2tiles.py --processes=16 --xyz --profile=raster --webviewer=leaflet -z 1-8 $PWD/_tempStuff/map.png $PWD/public/assets/tiles"
+    "tiles": "cd ./ && docker run --rm -v /home:/home ghcr.io/osgeo/gdal:ubuntu-small-latest gdal2tiles.py --processes=16 --xyz --profile=raster --webviewer=leaflet -z 1-8 $PWD/_tempStuff/map.png $PWD/public/assets/t0"
   },
   "dependencies": {
     "cross-env": "^7.0.3",

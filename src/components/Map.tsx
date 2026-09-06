@@ -171,7 +171,7 @@ const Map = (): JSX.Element => {
   // --------------------------------------------------------------------------------------------------------------------
   const setupRectangle = (
     rectangle: L.Rectangle,
-    featuresLayerGroup: L.GeoJSON
+    featuresLayerGroup: L.GeoJSON,
   ) => {
     if (!featuresLayerGroup) {
       console.error("setupRectangle(): features layer is undefined");
@@ -222,7 +222,7 @@ const Map = (): JSX.Element => {
         updateTooltip(rectangle!);
         saveZones(featuresLayerGroup);
         setChangeCount(c++);
-      }
+      },
     );
     updateTooltip(rectangle);
   };
@@ -254,14 +254,14 @@ const Map = (): JSX.Element => {
               L.latLng([g.coordinates[0][0][1], g.coordinates[0][0][0]] as [
                 number,
                 number,
-              ])
+              ]),
             );
             // NE
             const latlng1 = constrainLatLng(
               L.latLng([g.coordinates[0][2][1], g.coordinates[0][2][0]] as [
                 number,
                 number,
-              ])
+              ]),
             );
 
             const l = L.latLngBounds(latlng0, latlng1);
@@ -286,7 +286,7 @@ const Map = (): JSX.Element => {
   // --------------------------------------------------------------------------------------------------------------------
   const loadZones = (map: L.Map, featuresLayerGroup: L.GeoJSON) => {
     let objectOut: geojson.FeatureCollection<any> = loadFromStorage(
-      "zones"
+      "zones",
     ) as geojson.FeatureCollection<any>;
     if (!objectOut) {
       console.log("NOTHING loaded");
@@ -352,7 +352,7 @@ const Map = (): JSX.Element => {
       if (teleportButton) {
         L.DomUtil.addClass(
           m.current.getContainer(),
-          "crosshair-cursor-enabled"
+          "crosshair-cursor-enabled",
         );
         const zs = document.getElementsByClassName("ScumZone");
         for (const z of zs) {
@@ -361,7 +361,7 @@ const Map = (): JSX.Element => {
       } else {
         L.DomUtil.removeClass(
           m.current.getContainer(),
-          "crosshair-cursor-enabled"
+          "crosshair-cursor-enabled",
         );
         const zs = document.getElementsByClassName("ScumZone");
         for (const z of zs) {
@@ -383,7 +383,7 @@ const Map = (): JSX.Element => {
         pane: "featuresPane",
         bubblingMouseEvents: false,
         onEachFeature: (
-          feature: geojson.Feature<geojson.Geometry, geojson.GeoJsonProperties>
+          feature: geojson.Feature<geojson.Geometry, geojson.GeoJsonProperties>,
         ) => {
           console.log("feature", feature);
         },
@@ -405,7 +405,7 @@ const Map = (): JSX.Element => {
       map.createPane("editPane");
       map.createPane("featuresPane");
 
-      L.tileLayer("assets/tiles/{z}/{x}/{y}.png", {
+      L.tileLayer("assets/t0/{z}/{x}/{y}.png", {
         maxZoom: 8,
         minZoom: 3,
         noWrap: true,
