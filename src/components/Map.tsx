@@ -392,6 +392,7 @@ const Map = (): JSX.Element => {
       const map = L.map("map", {
         center: [-80, 80],
         zoom: 3,
+        wheelPxPerZoomLevel: 300,
         crs: L.CRS.Simple,
         doubleClickZoom: false,
         editable: true,
@@ -400,14 +401,74 @@ const Map = (): JSX.Element => {
           editLayer: editLayerGroup,
           featuresLayer: featuresLayerGroup,
         },
-        //maxBounds: [          [90, -185],          [-45, 50],        ],
       });
       map.createPane("editPane");
       map.createPane("featuresPane");
 
+      // Leaflet's built-in scroll-wheel zoom normalizes deltaY using
+      // window.devicePixelRatio, which changes with the browser's page zoom
+      // level (Ctrl+scroll / Ctrl+/-). That makes wheel-zoom sensitivity on
+      // the map drift once the browser isn't at 100%. This replaces the
+      // built-in handler with the same accumulation/debounce algorithm, but
+      // normalizes deltaY without the devicePixelRatio factor so it behaves
+      // the same at any browser zoom level.
+      map.scrollWheelZoom.disable();
+
+      let wheelDelta = 0;
+      let wheelStartTime = 0;
+      let wheelLastPos: L.Point;
+      let wheelTimer: ReturnType<typeof setTimeout> | undefined;
+
+      const getWheelDelta = (e: WheelEvent): number => {
+        if (e.deltaY && e.deltaMode === 1) return -e.deltaY * 20; // lines
+        if (e.deltaY && e.deltaMode === 2) return -e.deltaY * 60; // pages
+        return -e.deltaY; // pixels, raw (no devicePixelRatio factor)
+      };
+
+      const performWheelZoom = () => {
+        const zoom = map.getZoom();
+        const snap = map.options.zoomSnap || 0;
+        const wheelPxPerZoomLevel = map.options.wheelPxPerZoomLevel || 60;
+
+        map.stop();
+
+        const d2 = wheelDelta / (wheelPxPerZoomLevel * 4);
+        const d3 = (4 * Math.log(2 / (1 + Math.exp(-Math.abs(d2))))) / Math.LN2;
+        const d4 = snap ? Math.ceil(d3 / snap) * snap : d3;
+        const targetZoom = zoom + (wheelDelta > 0 ? d4 : -d4);
+        const clampedZoom = Math.min(
+          map.getMaxZoom(),
+          Math.max(map.getMinZoom(), targetZoom),
+        );
+
+        wheelDelta = 0;
+        wheelStartTime = 0;
+
+        if (clampedZoom === zoom) return;
+        map.setZoomAround(wheelLastPos, clampedZoom);
+      };
+
+      map.getContainer().addEventListener(
+        "wheel",
+        (e: WheelEvent) => {
+          e.preventDefault();
+
+          wheelDelta += getWheelDelta(e);
+          wheelLastPos = map.mouseEventToContainerPoint(e);
+
+          if (!wheelStartTime) wheelStartTime = Date.now();
+          const debounce = map.options.wheelDebounceTime ?? 40;
+          const left = Math.max(debounce - (Date.now() - wheelStartTime), 0);
+
+          clearTimeout(wheelTimer);
+          wheelTimer = setTimeout(performWheelZoom, left);
+        },
+        { passive: false },
+      );
+
       L.tileLayer("assets/t0/{z}/{x}/{y}.png", {
         maxZoom: 8,
-        minZoom: 3,
+        minZoom: 2,
         noWrap: true,
         bounds: [
           [0, 0],
